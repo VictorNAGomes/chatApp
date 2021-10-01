@@ -15,6 +15,16 @@ class User {
     const users = await knex.select().table('users')
     return users
   }
+
+  async findById (id) {
+    const user = await knex.select().table('users').where({id})
+    return user
+  }
+
+  async sendInvitation (data) {
+    const invite = await knex.insert(data).table('invitations')
+    return invite
+  }
 }
 
 module.exports = new User()
