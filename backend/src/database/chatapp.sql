@@ -35,3 +35,15 @@ create table chat(
     on update cascade 
     on delete cascade 
 );
+
+create table invitations(
+  id int not null primary key auto_increment,
+  invite_from int not null,
+  invite_to int not null,
+  CONSTRAINT fk_invite_from FOREIGN KEY (invite_from) REFERENCES users(id)
+    on update cascade 
+    on delete cascade,
+  CONSTRAINT fk_invite_to FOREIGN KEY (invite_to) REFERENCES users(id)
+    on update cascade 
+    on delete cascade 
+);
