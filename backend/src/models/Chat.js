@@ -15,6 +15,11 @@ class Chat {
     const contact = await knex.insert(data).table('contacts')
     return contact
   }
+
+  async showInvitations (id) {
+    const invitations = await knex.select().table('invitations').where({invite_to: id})
+    return invitations
+  }
 }
 
 module.exports = new Chat()

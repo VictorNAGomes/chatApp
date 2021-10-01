@@ -76,6 +76,27 @@ class ChatController {
       res.json({status: false, error: err})
     }
   }
+
+  async showInvitations (req, res) {
+    try {
+      const { id } = req.params
+      let allInvites = []
+      const invitations = await Chat.showInvitations(id)
+      for (const invitation of invitations) {
+        const user = await User.findById(invitation.invite_from)
+        allInvites = [
+          ...allInvites,
+          user[0]
+        ]
+      }
+      
+      res.statusCode = 200
+      res.json({status: true, invitations: allInvites})
+    } catch (err) {
+      res.statusCode = 500
+      res.json({status: false, error: err})
+    }
+  }
 }
 
 module.exports = new ChatController()

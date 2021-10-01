@@ -11,5 +11,6 @@ router.get('/users', UserController.findAll)
 router.post('/sendInvitation', ChatController.sendInvitation)
 router.post('/acceptInvitation', ChatController.acceptInvitation)
 router.post('/declineInvitation', ChatController.declineInvitation)
+router.get('/showInvitations/:id', ChatController.showInvitations)
 
 module.exports = router;
