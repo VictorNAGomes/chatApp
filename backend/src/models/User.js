@@ -10,6 +10,11 @@ class User {
     const user = await knex.select().table('users').where({userName})
     return user
   }
+
+  async findAll () {
+    const users = await knex.select().table('users')
+    return users
+  }
 }
 
 module.exports = new User()

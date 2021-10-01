@@ -30,7 +30,19 @@ class UserController {
       }
     } catch (err) {
       res.statusCode = 500
-      res.json({status: false, erro: err})
+      res.json({status: false, error: err})
+    }
+  }
+
+  async findAll (req, res) {
+    try {
+      const users = await User.findAll()
+
+      res.statusCode = 200
+      res.json({status: true, users})
+    } catch (err) {
+      res.statusCode = 500
+      res.json({status: false, error: err})
     }
   }
 }
