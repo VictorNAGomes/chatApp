@@ -45,31 +45,6 @@ class UserController {
       res.json({status: false, error: err})
     }
   }
-
-  async sendInvitation (req, res) {
-    try{
-      const { from, to } = req.body
-      const user1 = await User.findById(from)
-      const user2 = await User.findById(to)
-      if (user1.length > 0 && user2.length > 0) {
-        const data = {
-          invite_from: from,
-          invite_to: to
-        }
-
-        await User.sendInvitation(data)
-
-        res.statusCode = 200
-        res.json({status: true, msg: "Solicitação enviada"})
-      } else {
-        res.statusCode = 404
-        res.json({status: false, msg: "Usuário não encontrado"})
-      }
-    } catch (err) {
-      res.statusCode = 500
-      res.json({status: false, error: err})
-    }
-  }
 }
 
 module.exports = new UserController()
