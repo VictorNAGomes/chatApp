@@ -3,12 +3,12 @@ const app = express()
 const server = require('http').createServer(app)
 const {Server} = require('socket.io')
 const io = new Server(server)
-const Router = require('./routes'); 
+const Router = require('./routes')
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-app.use(Router);
+app.use(Router)
 
 io.on('connection', socket => {
   console.log('User logged in :)')

@@ -97,6 +97,32 @@ class ChatController {
       res.json({status: false, error: err})
     }
   }
+
+
+
+  async sendMessage (req, res) {
+    try {
+      const { from, to, msg } = req.body
+      const user1 = await User.findById(from)
+      const user2 = await User.findById(to)
+      if (user1.length > 0 && user2.length > 0) {
+        const data = {
+          from_user: from,
+          to_user: to,
+          msg
+        }
+
+        await Chat.sendMessage(data)
+        await Chat.setChatting(true, data)
+
+        res.statusCode = 200
+        res.json({status: true, msg: "Mensagem enviada com sucessos"})
+      }
+    } catch (err) {
+      res.statusCode = 500
+      res.json({status: false, error: err})
+    }
+  }
 }
 
 module.exports = new ChatController()
