@@ -117,6 +117,32 @@ class ChatController {
 
         res.statusCode = 200
         res.json({status: true, msg: "Mensagem enviada com sucessos"})
+      } else {
+        res.statusCode = 404
+        res.json({status: false, msg: "Usuário não encontrado"})
+      }
+    } catch (err) {
+      res.statusCode = 500
+      res.json({status: false, error: err})
+    }
+  }
+
+  async showContacts (req, res) {
+    try {
+      const { id } = req.params
+      const user = await User.findById(id)
+      if (user.length > 0) {
+        const contacts = await Chat.showContacts(id)
+        if (contacts.length > 0) {
+          res.statusCode = 200
+          res.json({status: true, contacts})
+        } else {
+          res.statusCode = 404
+          res.json({status: true, msg: "Nenhum contato encontrado"})
+        }
+      } else {
+        res.statusCode = 404
+        res.json({status: false, msg: "Usuário não encontrado"})
       }
     } catch (err) {
       res.statusCode = 500

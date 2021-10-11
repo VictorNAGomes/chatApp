@@ -34,7 +34,7 @@ class Chat {
   }
 
   async showContacts (id) {
-    const contacts = await knex.select().table('contacts').whereRaw('user1 = ? or user2 = ?', [id, id])
+    const contacts = await knex.select().table('contacts').whereRaw('user1 = ? or user2 = ?', [ id, id ])
     return contacts
   }
 }
