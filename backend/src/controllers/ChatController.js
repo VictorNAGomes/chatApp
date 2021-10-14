@@ -37,11 +37,18 @@ class ChatController {
           invite_from: from,
           invite_to: to
         }
+      
+        const contactData = {
+          user1: from,
+          user2: to
+        }
 
         await Chat.deleteInvitation(data)
 
+        await Chat.createContact(contactData)
+
         res.statusCode = 200
-        res.json({status: true, msg: "Solicitação apagada com sucesso"})
+        res.json({status: true, msg: "Solicitação aceita com sucesso"})
       } else {
         res.statusCode = 404
         res.json({status: false, msg: "Usuário não encontrado"})
@@ -139,6 +146,29 @@ class ChatController {
         } else {
           res.statusCode = 404
           res.json({status: true, msg: "Nenhum contato encontrado"})
+        }
+      } else {
+        res.statusCode = 404
+        res.json({status: false, msg: "Usuário não encontrado"})
+      }
+    } catch (err) {
+      res.statusCode = 500
+      res.json({status: false, error: err})
+    }
+  }
+  
+  async showMessages (req, res) {
+    try {
+      const { id } = req.params
+      const user = await User.findById(id)
+      if (user.length > 0) {
+        const messages = await Chat.showMessages(id)
+        if (messages.length > 0) {
+          res.statusCode = 200
+          res.json({status: true, messages})
+        } else {
+          res.statusCode = 404
+          res.json({status: false, msg: "Não há mensagens"})
         }
       } else {
         res.statusCode = 404

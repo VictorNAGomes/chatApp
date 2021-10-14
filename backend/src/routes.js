@@ -14,6 +14,7 @@ router.post('/invitation/accept', ChatController.acceptInvitation)
 router.post('/invitation/decline', ChatController.declineInvitation)
 router.get('/invitations/:id', ChatController.showInvitations)
 router.post('/message/send', ChatController.sendMessage)
+router.get('/message/show/:id', ChatController.showMessages)
 router.get('/contacts/:id', ChatController.showContacts)
 
 module.exports = router;

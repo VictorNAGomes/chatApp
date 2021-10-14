@@ -37,6 +37,14 @@ class Chat {
     const contacts = await knex.select().table('contacts').whereRaw('user1 = ? or user2 = ?', [ id, id ])
     return contacts
   }
+
+  async showMessages (id) {
+    const messages = await knex.select()
+      .table('contacts')
+      .whereRaw('user1 = ? or user2 = ?', [ id, id ])
+      .where({chatting: true})
+    return messages
+  }
 }
 
 module.exports = new Chat()
