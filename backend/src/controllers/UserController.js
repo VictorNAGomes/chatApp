@@ -45,6 +45,24 @@ class UserController {
       res.json({status: false, error: err})
     }
   }
+
+  async search (req, res) {
+    try {
+      const { userName } = req.params
+
+      const users = await User.search(userName)
+      if (users.length > 0) {
+        res.statusCode = 200
+        res.json({status: true, users})
+      } else {
+        res.statusCode = 404
+        res.json({status: false, msg: "Usuário não encontrado"})
+      }
+    } catch (err) {
+      res.statusCode = 500
+      res.json({status: false, error: err})
+    }
+  }
 }
 
 module.exports = new UserController()

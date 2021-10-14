@@ -20,6 +20,11 @@ class User {
     const user = await knex.select().table('users').where({id})
     return user
   }
+
+  async search (userName) {
+    const users = await knex.select('id', 'userName').table('users').where('userName', 'like', '%'+ userName +'%')
+    return users
+  }
 }
 
 module.exports = new User()
